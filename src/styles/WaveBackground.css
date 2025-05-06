@@ -53,7 +53,6 @@
   animation: animate 40s linear infinite;
 }
 
-/* Dark theme adjustments */
 .dark .wave span:nth-child(1) {
   background: rgba(20, 20, 20, 0.6);
 }

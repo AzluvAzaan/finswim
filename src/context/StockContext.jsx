@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { fetchQuote } from '../api/fetchQuote';
 
 const StockContext = createContext();
@@ -19,11 +19,11 @@ export function StockProvider({ children }) {
     return () => clearTimeout(timer);
   }, [toast.visible]);
 
-  function showToast(message, type = 'error') {
+  const showToast = useCallback((message, type = 'error') => {
     setToast({ visible: true, message, type });
-  }
+  }, []);
 
-  async function addStock(symbol, qty, purchase) {
+  const addStock = useCallback(async (symbol, qty, purchase) => {
     const id = Date.now() + Math.random();
     const upperSymbol = symbol.toUpperCase();
     
@@ -40,7 +40,7 @@ export function StockProvider({ children }) {
     } catch {
       showToast('API error - please try again later', 'error');
     }
-  }
+  }, [showToast]);
 
   return (
     <ToastContext.Provider value={{ toast, showToast }}>
@@ -59,12 +59,13 @@ export function useToast() {
   return useContext(ToastContext);
 }
 
-// Theme context for dark mode
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState('light');
-  function toggleTheme() {
+  
+  const toggleTheme = useCallback(() => {
     setTheme(t => (t === 'light' ? 'dark' : 'light'));
-  }
+  }, []);
+  
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}

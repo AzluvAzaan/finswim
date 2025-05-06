@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useToast } from '../context/StockContext';
 
 export default function Toast() {
   const { toast } = useToast();
   const [animation, setAnimation] = useState('');
   
-  useEffect(() => {
+  const handleToastAnimation = useCallback(() => {
     if (toast.visible) {
       setAnimation('toast-slide-in');
       
@@ -16,6 +16,10 @@ export default function Toast() {
       return () => clearTimeout(timer);
     }
   }, [toast.visible]);
+  
+  useEffect(() => {
+    return handleToastAnimation();
+  }, [handleToastAnimation]);
   
   if (!toast.visible) return null;
   

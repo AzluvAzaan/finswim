@@ -1,11 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { useStocks } from '../context/StockContext';
 
 export default function StockForm() {
   const { addStock } = useStocks();
   const formRef = useRef();
 
-  function handleSubmit(e) {
+  const handleSubmit = useCallback((e) => {
     e.preventDefault();
     const form = e.target;
     const symbol = form.symbol.value.trim();
@@ -14,7 +14,7 @@ export default function StockForm() {
     if (!symbol || qty <= 0 || purchase <= 0) return;
     addStock(symbol, qty, purchase);
     form.reset();
-  }
+  }, [addStock]);
 
   return (
     <form className="stock-form" onSubmit={handleSubmit} ref={formRef} autoComplete="off" style={{ width: '100%' }}>

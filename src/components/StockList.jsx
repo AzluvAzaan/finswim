@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { useStocks } from '../context/StockContext';
 import StockRow from './StockRow';
 
@@ -7,7 +7,7 @@ export default function StockList() {
   const listRef = useRef(null);
   const headerRef = useRef(null);
   
-  useEffect(() => {
+  const animateHeader = useCallback(() => {
     if (headerRef.current) {
       headerRef.current.style.opacity = '0';
       headerRef.current.style.transform = 'translateY(15px)';
@@ -19,6 +19,10 @@ export default function StockList() {
       }, 100);
     }
   }, []);
+  
+  useEffect(() => {
+    animateHeader();
+  }, [animateHeader]);
   
   return (
     <div className="stock-list" ref={listRef}>

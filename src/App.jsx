@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import StockForm from './components/StockForm';
 import StockList from './components/StockList';
 import Toast from './components/Toast';
@@ -14,15 +14,23 @@ export default function App() {
   const stockListRef = useRef(null);
   const [showStockList, setShowStockList] = useState(false);
   
-  useEffect(() => {
+  const applyTheme = useCallback(() => {
     document.body.dataset.theme = theme;
   }, [theme]);
   
-  useEffect(() => {
+  const updateStockListVisibility = useCallback(() => {
     if (stocks.length > 0 && !showStockList) {
       setShowStockList(true);
     }
   }, [stocks, showStockList]);
+  
+  useEffect(() => {
+    applyTheme();
+  }, [applyTheme]);
+  
+  useEffect(() => {
+    updateStockListVisibility();
+  }, [updateStockListVisibility]);
 
   return (
     <>
