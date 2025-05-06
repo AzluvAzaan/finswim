@@ -9,7 +9,6 @@ export default function Toast() {
     if (toast.visible) {
       setAnimation('toast-slide-in');
       
-      // Start fade-out animation shortly before disappearing
       const timer = setTimeout(() => {
         setAnimation('toast-fade-out');
       }, 4500);

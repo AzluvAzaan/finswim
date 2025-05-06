@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 
-export default function StockRow({ stock }) {
+export default function StockRow({ stock, style }) {
   const { symbol, qty, purchase, current, loading, error } = stock;
+  const rowRef = useRef(null);
+  
+  useEffect(() => {
+    if (rowRef.current) {
+      rowRef.current.style.opacity = '0';
+      rowRef.current.style.transform = 'translateY(20px)';
+      
+      void rowRef.current.offsetWidth;
+      
+      rowRef.current.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      rowRef.current.style.opacity = '1';
+      rowRef.current.style.transform = 'translateY(0)';
+    }
+  }, []);
+  
   let content;
   if (loading) {
     content = <div className="card"><em>Fetching {symbol}…</em></div>;
@@ -39,5 +54,6 @@ export default function StockRow({ stock }) {
       </div>
     );
   }
-  return <div className="stock-row">{content}</div>;
+  
+  return <div className="stock-row" ref={rowRef} style={style}>{content}</div>;
 } 

@@ -1,8 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import StockForm from './components/StockForm';
 import StockList from './components/StockList';
 import Toast from './components/Toast';
 import WaveBackground from './components/WaveBackground';
+import ThemeToggle from './components/ThemeToggle';
 import { useTheme, useStocks } from './context/StockContext';
 import './App.css'
 
@@ -11,15 +12,22 @@ export default function App() {
   const { stocks } = useStocks();
   const mainDivRef = useRef(null);
   const stockListRef = useRef(null);
+  const [showStockList, setShowStockList] = useState(false);
   
-  // Set theme
   useEffect(() => {
     document.body.dataset.theme = theme;
   }, [theme]);
+  
+  useEffect(() => {
+    if (stocks.length > 0 && !showStockList) {
+      setShowStockList(true);
+    }
+  }, [stocks, showStockList]);
 
   return (
     <>
       <WaveBackground />
+      <ThemeToggle />
       <div className="container">
         <div 
           className="content-wrapper" 
@@ -41,7 +49,6 @@ export default function App() {
           >
             <header className="header" style={{ display: 'flex', alignItems: 'center', marginBottom: 32 }}>
               <span style={{ marginRight: 24 }}>
-                {/* Calculator SVG from screenshots */}
                 <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="8" y="12" width="40" height="36" rx="4" fill="#fff" stroke="#222" strokeWidth="2"/>
                   <rect x="16" y="20" width="24" height="8" rx="2" fill="#fbbf24" stroke="#222" strokeWidth="2"/>
@@ -55,24 +62,16 @@ export default function App() {
                 </svg>
               </span>
               <h1 style={{ fontSize: 36, fontWeight: 700, margin: 0 }}>Finance Dashboard</h1>
-              <div style={{ flex: 1 }} />
-              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span className="toggle-switch">
-                  <input type="checkbox" checked={theme === 'dark'} onChange={toggleTheme} />
-                  <span className="toggle-slider"></span>
-                </span>
-                Dark mode
-              </label>
             </header>
             <div className="form-container" style={{ width: '100%' }}>
               <StockForm />
             </div>
           </div>
           
-          {stocks.length > 0 && (
+          {showStockList && stocks.length > 0 && (
             <div 
               ref={stockListRef}
-              className="stock-list-glow" 
+              className="stock-list-glow animate-in" 
               style={{ 
                 maxWidth: 640, 
                 width: '100%', 

@@ -15,13 +15,13 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: #b5d6f1; /* Light blue for light theme */
+  background: #94c9f5;
   box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.2);
   transition: 0.5s;
 }
 
 .dark .wave {
-  background: #081b33; /* Dark blue for dark theme */
+  background: #0b2546;
   box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
 }
 
@@ -37,7 +37,7 @@
 
 .wave span:nth-child(1) {
   border-radius: 45%;
-  background: rgba(255, 255, 255, 0.2); /* Light semi-transparent in light mode */
+  background: rgba(255, 255, 255, 0.2); 
   animation: animate 20s linear infinite;
 }
 

@@ -9,7 +9,6 @@ export function StockProvider({ children }) {
   const [stocks, setStocks] = useState([]);
   const [toast, setToast] = useState({ visible: false, message: '', type: 'error' });
 
-  // Auto-hide toast after 5 seconds
   useEffect(() => {
     let timer;
     if (toast.visible) {
@@ -32,11 +31,11 @@ export function StockProvider({ children }) {
       const current = await fetchQuote(upperSymbol);
       if (current === null) {
         showToast(`Invalid symbol: ${upperSymbol}`, 'error');
-        return; // Don't add invalid stocks
+        return;
       }
       setStocks(s => [
         { id, symbol: upperSymbol, qty, purchase, current, loading: false },
-        ...s // Add new entry at the beginning of the array
+        ...s
       ]);
     } catch {
       showToast('API error - please try again later', 'error');
