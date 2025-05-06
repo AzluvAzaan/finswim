@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap");
+
+.wave-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.wave {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #b5d6f1; /* Light blue for light theme */
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.2);
+  transition: 0.5s;
+}
+
+.dark .wave {
+  background: #081b33; /* Dark blue for dark theme */
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+}
+
+.wave span {
+  content: "";
+  position: absolute;
+  width: 325vh;
+  height: 325vh;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -75%);
+}
+
+.wave span:nth-child(1) {
+  border-radius: 45%;
+  background: rgba(255, 255, 255, 0.2); /* Light semi-transparent in light mode */
+  animation: animate 20s linear infinite;
+}
+
+.wave span:nth-child(2) {
+  border-radius: 40%;
+  background: rgba(255, 255, 255, 0.1);
+  animation: animate 30s linear infinite;
+}
+
+.wave span:nth-child(3) {
+  border-radius: 42.5%;
+  background: rgba(255, 255, 255, 0.05);
+  animation: animate 40s linear infinite;
+}
+
+/* Dark theme adjustments */
+.dark .wave span:nth-child(1) {
+  background: rgba(20, 20, 20, 0.6);
+}
+
+.dark .wave span:nth-child(2) {
+  background: rgba(20, 20, 20, 0.4);
+}
+
+.dark .wave span:nth-child(3) {
+  background: rgba(20, 20, 20, 0.2);
+}
+
+@keyframes animate {
+  0% {
+    transform: translate(-50%, -75%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -75%) rotate(360deg);
+  }
+} 
