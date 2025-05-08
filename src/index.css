@@ -170,6 +170,67 @@ h2 {
   opacity: 0;
   animation: fadeSlideIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   animation-fill-mode: both;
+  transform-origin: center;
+}
+
+.stock-row.removing {
+  animation: none;
+}
+
+.stock-remove-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.2s ease;
+  color: #6b7280;
+}
+
+.stock-card:hover .stock-remove-btn {
+  opacity: 0.9;
+  transform: scale(1);
+}
+
+.stock-remove-btn:hover {
+  background: #fee2e2;
+  color: #dc2626;
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.stock-remove-btn:active {
+  transform: scale(0.95);
+}
+
+[data-theme="dark"] .stock-remove-btn {
+  background: #374151;
+  color: #9ca3af;
+}
+
+[data-theme="dark"] .stock-remove-btn:hover {
+  background: #4b1c21;
+  color: #f87171;
+}
+
+@keyframes fadeOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(30px);
+  }
 }
 
 .toggle-switch {
@@ -341,6 +402,7 @@ h2 {
   border: 1px solid rgba(0,0,0,0.05);
   box-shadow: 0 4px 12px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.03), inset 0 0 0 1px rgba(255,255,255,0.5);
   transform-origin: center;
+  position: relative;
 }
 
 .stock-card:hover {
@@ -507,26 +569,3 @@ h2 {
 .stock-row:nth-child(9) { animation-delay: 0.8s; }
 .stock-row:nth-child(10) { animation-delay: 0.9s; }
 .stock-row:nth-child(n+11) { animation-delay: 1s; }
-
-.stock-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 1.25rem;
-  transition: all 0.3s ease;
-  margin-bottom: 1rem;
-  border: 1px solid rgba(0,0,0,0.05);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.03), inset 0 0 0 1px rgba(255,255,255,0.5);
-  transform-origin: center;
-}
-
-.stock-card:hover {
-  transform: translateY(-2px) scale(1.01);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06), inset 0 0 0 1px rgba(255,255,255,0.7);
-}
-
-.no-stocks {
-  margin: 1rem 0 0 0;
-  color: #222;
-  font-size: 1.1rem;
-  animation: fadeSlideIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}

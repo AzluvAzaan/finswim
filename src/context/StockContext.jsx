@@ -42,9 +42,14 @@ export function StockProvider({ children }) {
     }
   }, [showToast]);
 
+  const removeStock = useCallback((id) => {
+    setStocks(prevStocks => prevStocks.filter(stock => stock.id !== id));
+    showToast('Stock removed successfully', 'success');
+  }, [showToast]);
+
   return (
     <ToastContext.Provider value={{ toast, showToast }}>
-      <StockContext.Provider value={{ stocks, addStock }}>
+      <StockContext.Provider value={{ stocks, addStock, removeStock }}>
         {children}
       </StockContext.Provider>
     </ToastContext.Provider>

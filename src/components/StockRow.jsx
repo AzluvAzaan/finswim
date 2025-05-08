@@ -1,8 +1,11 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback, useState } from 'react';
+import { useStocks } from '../context/StockContext';
 
 export default function StockRow({ stock, style }) {
-  const { symbol, qty, purchase, current, loading, error } = stock;
+  const { symbol, qty, purchase, current, loading, error, id } = stock;
+  const { removeStock } = useStocks();
   const rowRef = useRef(null);
+  const [isRemoving, setIsRemoving] = useState(false);
   
   const animateRow = useCallback(() => {
     if (rowRef.current) {
@@ -28,6 +31,19 @@ export default function StockRow({ stock, style }) {
     
     return { profit, profitClass, percentChange };
   }, [current, purchase, qty]);
+
+  const handleRemove = useCallback(() => {
+    if (rowRef.current) {
+      setIsRemoving(true);
+      rowRef.current.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      rowRef.current.style.opacity = '0';
+      rowRef.current.style.transform = 'translateX(50px)';
+      
+      setTimeout(() => {
+        removeStock(id);
+      }, 400); // Match timing with transition
+    }
+  }, [id, removeStock]);
   
   let content;
   if (loading) {
@@ -61,9 +77,21 @@ export default function StockRow({ stock, style }) {
             <div className="stock-value">${current.toFixed(2)}</div>
           </div>
         </div>
+
+        <button 
+          className="stock-remove-btn" 
+          onClick={handleRemove}
+          aria-label="Remove stock"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
       </div>
     );
   }
   
-  return <div className="stock-row" ref={rowRef} style={style}>{content}</div>;
+  const rowClass = isRemoving ? 'stock-row removing' : 'stock-row';
+  return <div className={rowClass} ref={rowRef} style={style}>{content}</div>;
 } 
